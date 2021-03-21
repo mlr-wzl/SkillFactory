@@ -46,4 +46,22 @@ for client in sorted(clients, key=lambda cli: cli.surname):
     print(client.get_info())
 
 
+class Guest (Client):
+    def __init__(self, name, surname, city, balance, status):
+        super().__init__(name, surname, city, balance)
+        self.status = status
 
+    def get_guest(self):
+        return f"{self.name} {self.surname}, {self.city}, Статус: {self.status}"
+
+
+guest_1 = Guest("Вася", "Иванов", "Омск", 650, "Наставник")
+guest_2 = Guest("Петя", "Жуков", "Вологда", 130, "Тренер")
+guest_3 = Guest("Катя", "Миронова", "Москва", 200, "Покупатель")
+guest_4 = Guest("Катя", "Антонова", "Москва", 20, "Покупатель")
+
+guests = [guest_1, guest_2, guest_3, guest_4]
+
+
+for guest in sorted(guests, key=lambda gue: gue.surname):
+    print(guest.get_guest())
