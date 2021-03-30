@@ -190,45 +190,45 @@ class Game:
         self.AI = AI
         self.AI_board = AI_board
 
-    def random_board:
+    def random_board(self):
         state_list0 = []
         for i in range(1, 7):
             for j in range(1, 7):
                 state_list0.append([i, j, "0"])
-        board_0=Board(state_list0, [], False, 6)
         dir=["ver", "hor"]
-        dot_rand=Dot(random.randint(1,6), random.randint(1,6))
-        ship3= Ship(3, dot_rand, random.choice(dir) , 3)
-        ship2 = Ship(2, dot_rand, random.choice(dir), 2)
-        ship1 = Ship(2, dot_rand, random.choice(dir), 2)
         while True:
-            try:
-                board_0.add_ship(ship3)
-                board_0.contour()
-            except Error:
-                continue
-            else:
-                break
-        while True:
-            try:
-                for i in range(2):
-                    board_0.add_ship(ship2)
+                try:
+                    board_0 = Board(state_list0, [], False, 6)
+                    dot_rand = Dot(random.randint(1, 6), random.randint(1, 6))
+                    ship3 = Ship(3, dot_rand, random.choice(dir), 3)
+                    board_0.add_ship(ship3)
+                except Error or RuntimeError:
+                    continue
+                else:
                     board_0.contour()
-            except Error:
-                continue
-            else:
-                break
-        while True:
-            try:
+                try:
+                    for i in range(2):
+                        dot_rand = Dot(random.randint(1, 6), random.randint(1, 6))
+                        ship2 = Ship(2, dot_rand, random.choice(dir), 2)
+                        board_0.add_ship(ship2)
+                except Error or RuntimeError:
+                    continue
+                else:
+                    board_0.contour()
+                    #board_0.ship_list.append(ship2)
                 for i in range(3):
-                    board_0.add_ship(ship1)
-                    board_0.contour()
-            except Error:
-                continue
-            else:
-                break
+                    try:
+                        dot_rand = Dot(random.randint(1, 6), random.randint(1, 6))
+                        ship1 = Ship(1, dot_rand, random.choice(dir), 1)
+                        board_0.add_ship(ship1)
+                    except Error or RuntimeError:
+                        continue
+                    else:
+                        board_0.contour()
+                        return board_0
 
-
+game1=Game(1,1,1,1)
+print(game1.random_board().print_board())
 
 
 
@@ -247,8 +247,8 @@ dot_s = Dot(6,6)
 dot_s2=Dot(5,6)
 ship_1 = Ship(1, dot_1, "ver", 1)
 #print(ship_1.dots())
-board_1=Board(state_list1, 1, False, 2)
-print(board_1.add_ship(ship_1))
+#board_1=Board(state_list1, 1, False, 2)
+#print(board_1.add_ship(ship_1))
 #print(board_1.add_ship(ship_1))
 #print(board_1.contour())
 #board_1.print_board()
@@ -257,7 +257,7 @@ print(board_1.add_ship(ship_1))
 #board_1.shoot(dot_s2)
 #board_1.print_board()
 #player_1 = AI(board_1, board_1)
-player_2 = User(board_1, board_1)
+#player_2 = User(board_1, board_1)
 #print(board_1.shoot(dot_s))
 #board_1.print_board()
 #print(player_2.foreign_board.add_ship(ship_1))
@@ -267,10 +267,12 @@ player_2 = User(board_1, board_1)
 
 #print(player_1.ask())
 #player_2.ask()
-player_2.move()
+#player_2.move()
 #print(player_2.move())
-player_2.foreign_board.print_board()
-board_1.print_board()
+#player_2.foreign_board.print_board()
+#board_1.print_board()
+
+
 
 
 
