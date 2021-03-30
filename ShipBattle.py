@@ -141,13 +141,13 @@ class Player:
                 x, y = self.ask()
                 dot = Dot(x,y)
                 result = self.foreign_board.shoot(dot)
-                print(result)
+                #print(result)
                 if result == "Hit":
-                    print("Wow! You hit!")
+                    #print("Wow! You hit!")
                     repeat = True
                     break
                 else:
-                    print(result)
+                    #print(result)
                     repeat = False
                     break
             except Error:
@@ -173,12 +173,64 @@ class User(Player):
     def ask(self):
         while True:
             try:
-                x,y = input("Please, input the coordinates of the target in the format: x y : " ).split()
+                coord = input("Please, input the coordinates of the target in the format: x y : " ).split()
+                x, y = coord
             except ValueError:
                 print("That was not a suitable input. Please try again.")
                 continue
             else:
+                x, y = int(x), int(y)
                 return x, y
+
+
+class Game:
+    def __init__(self, user, user_board, AI, AI_board):
+        self.user = user
+        self.user_board = user_board
+        self.AI = AI
+        self.AI_board = AI_board
+
+    def random_board:
+        state_list0 = []
+        for i in range(1, 7):
+            for j in range(1, 7):
+                state_list0.append([i, j, "0"])
+        board_0=Board(state_list0, [], False, 6)
+        dir=["ver", "hor"]
+        dot_rand=Dot(random.randint(1,6), random.randint(1,6))
+        ship3= Ship(3, dot_rand, random.choice(dir) , 3)
+        ship2 = Ship(2, dot_rand, random.choice(dir), 2)
+        ship1 = Ship(2, dot_rand, random.choice(dir), 2)
+        while True:
+            try:
+                board_0.add_ship(ship3)
+                board_0.contour()
+            except Error:
+                continue
+            else:
+                break
+        while True:
+            try:
+                for i in range(2):
+                    board_0.add_ship(ship2)
+                    board_0.contour()
+            except Error:
+                continue
+            else:
+                break
+        while True:
+            try:
+                for i in range(3):
+                    board_0.add_ship(ship1)
+                    board_0.contour()
+            except Error:
+                continue
+            else:
+                break
+
+
+
+
 
 
 board = []
@@ -209,16 +261,18 @@ player_2 = User(board_1, board_1)
 #print(board_1.shoot(dot_s))
 #board_1.print_board()
 #print(player_2.foreign_board.add_ship(ship_1))
-print(player_2.foreign_board.contour())
+#print(player_2.foreign_board.contour())
 #print(player_2.foreign_board.shoot(dot_s))
 #print(player_2.foreign_board.print_board())
 
 #print(player_1.ask())
 #player_2.ask()
 player_2.move()
-print(player_2.move())
-#board_1.print_board()
+#print(player_2.move())
 player_2.foreign_board.print_board()
+board_1.print_board()
+
+
 
 
 
