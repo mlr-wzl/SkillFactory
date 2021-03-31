@@ -68,7 +68,7 @@ class Board:
                         else:
                             #raise Error("You cannot place your ship there!"
                             raise BoardException()
-        if len(valid_results) != ship.length:
+        if len(valid_results) < ship.length:
             raise BoardException()
         else:
             for count, value in enumerate(valid_results):
@@ -219,9 +219,9 @@ class User(Player):
 class Game:
     def __init__(self, user, user_board, AI, AI_board):
         self.user = user
-        self.user_board = user_board
+        self.user_board = self.random_board()
         self.AI = AI
-        self.AI_board = AI_board
+        self.AI_board = self.AI_board()
 
     def random_board(self):
         state_list0 = []
@@ -232,11 +232,12 @@ class Game:
         dir=["ver", "hor"]
         ships=[]
         board_0 = Board(state_list0, [], False, 6)
-        while True: #and attempt < 2000:
+        while True:
             try:
                 dot_rand = Dot(random.randint(1, 6), random.randint(1, 6))
                 ship3 = Ship(3, dot_rand, random.choice(dir), 3)
                 board_0.add_ship(ship3)
+                board_0.contour()
             except BoardException:
                 attempt += 1
                 if attempt > 2000:
@@ -244,16 +245,10 @@ class Game:
                 else:
                     continue
             else:
-                #print(attempt)
-                board_0.contour()
-                ships.append(ship3)
-                #print(len(ships))
                 break
-        #return board_0
+        ships.append(ship3)
         for i in range(2):
             while True:
-                #if attempt > 2000:
-                    #return None
                 dot_rand = Dot(random.randint(1, 6), random.randint(1, 6))
                 ship2 = Ship(2, dot_rand, random.choice(dir), 2)
                 try:
@@ -267,14 +262,8 @@ class Game:
                         continue
                 break
             ships.append(ship2)
-        #print(attempt)
-        #print(len(ships))
-        #return board_0
-            #board_0.ship_list.append(ship2)
         for i in range(4):
             while True:
-                # if attempt > 2000:
-                #     return None
                 dot_rand = Dot(random.randint(1, 6), random.randint(1, 6))
                 ship1 = Ship(1, dot_rand, random.choice(dir), 1)
                 try:
@@ -291,6 +280,20 @@ class Game:
         print(len(ships))
         print(attempt)
         return board_0
+
+    def greet(self):
+        print("-------------------")
+        print("  Приветствуем вас  ")
+        print("      в игре       ")
+        print("    Морской бой    ")
+        print("-------------------")
+        print(" формат ввода: x y ")
+        print(" x - номер строки  ")
+        print(" y - номер столбца ")
+
+    def loop:
+
+
 
 game1=Game(1,1,1,1)
 board = game1.random_board()
