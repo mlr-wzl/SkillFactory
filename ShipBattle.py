@@ -3,6 +3,7 @@
 #from __future__ import print_function
 
 import random
+from random import seed
 import sys
 
 
@@ -38,11 +39,11 @@ class Ship:
         x,y = self.start_dot.x, self.start_dot.y
         for i in range(self.length):
             if self.direction == "ver":
-                if 0 < x + i < 6 > 6 or 0 < y < 6:
+                if 0 > x + i or x+i > 6  or 0 > y  or y > 6:
                     raise BoardException
                 dots_list.append([x + i, y])
             else:
-                if 0 < x < 6 > 6 or 0 < y+i < 6:
+                if 0 > x  or x > 6 or 0 > y+i or y+i > 6:
                     raise BoardException
                 dots_list.append([x, y + i])
 
@@ -56,14 +57,20 @@ class Board:
         self.alive_ships = alive_ships
 
     def add_ship(self, ship):
-            for i in range(len(self.state_list)):
-                for j in range(ship.length):
-                    if self.state_list[i][0] == ship.dots()[j][0] and self.state_list[i][1] == ship.dots()[j][1]:
-                        if self.state_list[i][2] == "0":
-                            self.state_list[i][2] = "x"
-                        else:
-                            #raise Error("You cannot place your ship there!")
-                            raise BoardException()
+        attempt = 0
+        for i in range(len(self.state_list)):
+            for j in range(ship.length):
+            #for j in range(len(self.state_list)):
+                if self.state_list[i][0] == ship.dots()[j][0] and self.state_list[i][1] == ship.dots()[j][1]:
+                    if self.state_list[i][2] == "0":
+                        self.state_list[i][2] = "x"
+                        attempt += 1
+                    else:
+                        #raise Error("You cannot place your ship there!")
+                        raise BoardException()
+        if attempt != ship.length:
+            raise BoardException()
+        else:
             return self.state_list
         #except BoardException as mr:
             #print(mr)
@@ -223,62 +230,84 @@ class Game:
         dir=["ver", "hor"]
         ships=[]
         board_0 = Board(state_list0, [], False, 6)
-        dot_rand = Dot(random.randint(1, 6), random.randint(1, 6))
-        ship3 = Ship(3, dot_rand, random.choice(dir), 3)
-        while True:
-            if attempt > 2000:
-                return None
+        success = False
+        while True: #and attempt < 2000:
+            #seed(1)
             try:
+                dot_rand = Dot(random.randint(1, 6), random.randint(1, 6))
+                ship3 = Ship(3, dot_rand, random.choice(dir), 3)
                 board_0.add_ship(ship3)
             except BoardException:
                 #print(mr)
                 attempt += 1
                 continue
-            break
-        board_0.contour()
-        ships.append(ship3)
-        #board_0.ship_list.append(ship3)
-        for i in range(2):
-            while True:
-                if attempt > 2000:
-                    return None
-                dot_rand = Dot(random.randint(1, 6), random.randint(1, 6))
-                ship2 = Ship(2, dot_rand, random.choice(dir), 2)
-                try:
-                    board_0.add_ship(ship2)
-                except BoardException:
-                    #print(mr)
-                    attempt +=1
-                    continue
-                break
-            board_0.contour()
-            ships.append(ship2)
-            #board_0.ship_list.append(ship2)
-        for i in range(4):
-            while True:
-                if attempt > 2000:
-                    return None
-                dot_rand = Dot(random.randint(1, 6), random.randint(1, 6))
-                ship1 = Ship(1, dot_rand, random.choice(dir), 1)
-                try:
-                    board_0.add_ship(ship1)
-                except BoardException:
-                    #print(mr)
-                    attempt += 1
-                    continue
-                break
-            board_0.contour()
-            ships.append(ship1)
-        print(len(ships))
-        return board_0
+            else:
+                print(attempt)
+                return board_0
+            # finally:
+            #     return board_0
+                #break
+            # board_0.contour()
+            # ships.append(ship3)
+            # print(attempt)
+            # print(len(ships))
+            # return board_0
+        # #board_0.ship_list.append(ship3)
+        # for i in range(2):
+        #     while True:
+        #         if attempt > 2000:
+        #             return None
+        #         dot_rand = Dot(random.randint(1, 6), random.randint(1, 6))
+        #         ship2 = Ship(2, dot_rand, random.choice(dir), 2)
+        #         try:
+        #             board_0.add_ship(ship2)
+        #         except BoardException:
+        #             #print(mr)
+        #             attempt +=1
+        #             continue
+        #         break
+        #     board_0.contour()
+        #     ships.append(ship2)
+        #     #board_0.ship_list.append(ship2)
+        # for i in range(4):
+        #     while True:
+        #         if attempt > 2000:
+        #             return None
+        #         dot_rand = Dot(random.randint(1, 6), random.randint(1, 6))
+        #         ship1 = Ship(1, dot_rand, random.choice(dir), 1)
+        #         try:
+        #             board_0.add_ship(ship1)
+        #         except BoardException:
+        #             #print(mr)
+        #             attempt += 1
+        #             continue
+        #         break
+        #     board_0.contour()
+        #     ships.append(ship1)
+        # print(len(ships))
+        # return board_0
 
 game1=Game(1,1,1,1)
-while True:
-    game1.random_board()
-    if game1.random_board() == None:
-        continue
-    else:
-        break
+board = game1.random_board()
+board.print_board()
+# while True:
+#     board = game1.random_board()
+#     if board == None:
+#         continue
+#     else:
+#         board.print_board()
+# state_list0 = []
+# for i in range(1, 7):
+#     for j in range(1, 7):
+#         state_list0.append([i, j, "0"])
+# board_0 = Board(state_list0, [], False, 6)
+# while True:
+#     game1.random_board()
+#     if game1.random_board() == None:
+#         continue
+#     else:
+#         game1.random_board().print_board()
+#         break
 
 
 
@@ -293,10 +322,10 @@ for i in range(1,7):
     for j in range(1,7):
         state_list1.append([i,j,"0"])
 
-dot_1 = Dot(6,6)
+dot_1 = Dot(6,4)
 dot_s = Dot(6,6)
 dot_s2=Dot(5,6)
-ship_1 = Ship(1, dot_1, "ver", 1)
+ship_1 = Ship(3, dot_1, "hor", 3)
 ship_2 = Ship(1, dot_s2, "ver", 1)
 #print(ship_1.dots())
 board_1=Board(state_list1, 1, False, 2)
