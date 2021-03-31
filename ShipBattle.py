@@ -87,9 +87,22 @@ class Board:
         return self.state_list
 
     def print_board(self):
+        board = [[" "] * 6 for i in range(1,7)]
         if not self.hid:
-            print(self.state_list)
-            return self.state_list
+            for i in range(len(self.state_list)):
+                    x, y = self.state_list[i][0], self.state_list[i][1]
+                    if self.state_list[i][2] == "x":
+                        board[x-1][y-1] = "■"
+                    else:
+                        board[x-1][y-1] = "О"
+            print()
+            print("    | 1 | 2 | 3 | 4 | 5 | 6 |")
+            print("  --------------------------- ")
+            for i, row in enumerate(board):
+                row_str = f"  {i} | {' | '.join(row)} | "
+                print(row_str)
+                print("  --------------------------- ")
+            print()
         else:
             print("No board to print, sorry")
 
@@ -206,6 +219,7 @@ class Game:
                     continue
                 else:
                     board_0.contour()
+                    board_0.ship_list.append(ship3)
                 try:
                     for i in range(2):
                         dot_rand = Dot(random.randint(1, 6), random.randint(1, 6))
@@ -215,8 +229,8 @@ class Game:
                     continue
                 else:
                     board_0.contour()
-                    #board_0.ship_list.append(ship2)
-                for i in range(3):
+                    board_0.ship_list.append(ship2)
+                for i in range(4):
                     try:
                         dot_rand = Dot(random.randint(1, 6), random.randint(1, 6))
                         ship1 = Ship(1, dot_rand, random.choice(dir), 1)
@@ -225,6 +239,7 @@ class Game:
                         continue
                     else:
                         board_0.contour()
+                        board_0.ship_list.append(ship1)
                         return board_0
 
 game1=Game(1,1,1,1)
@@ -247,7 +262,7 @@ dot_s = Dot(6,6)
 dot_s2=Dot(5,6)
 ship_1 = Ship(1, dot_1, "ver", 1)
 #print(ship_1.dots())
-#board_1=Board(state_list1, 1, False, 2)
+board_1=Board(state_list1, 1, False, 2)
 #print(board_1.add_ship(ship_1))
 #print(board_1.add_ship(ship_1))
 #print(board_1.contour())
