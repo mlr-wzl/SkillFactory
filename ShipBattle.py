@@ -57,20 +57,22 @@ class Board:
         self.alive_ships = alive_ships
 
     def add_ship(self, ship):
-        attempt = 0
+        #attempt = 0
+        valid_results=[]
         for i in range(len(self.state_list)):
             for j in range(ship.length):
-            #for j in range(len(self.state_list)):
-                if self.state_list[i][0] == ship.dots()[j][0] and self.state_list[i][1] == ship.dots()[j][1]:
-                    if self.state_list[i][2] == "0":
-                        self.state_list[i][2] = "x"
-                        attempt += 1
-                    else:
-                        #raise Error("You cannot place your ship there!")
-                        raise BoardException()
-        if attempt != ship.length:
+                    if self.state_list[i][0] == ship.dots()[j][0] and self.state_list[i][1] == ship.dots()[j][1]:
+                        if self.state_list[i][2] == "0":
+                            valid_results.append(i)
+                            #self.state_list[i][2] = "x"
+                        else:
+                            #raise Error("You cannot place your ship there!"
+                            raise BoardException()
+        if len(valid_results) != ship.length:
             raise BoardException()
         else:
+            for count, value in enumerate(valid_results):
+                self.state_list[value][2] = "x"
             return self.state_list
         #except BoardException as mr:
             #print(mr)
@@ -230,45 +232,39 @@ class Game:
         dir=["ver", "hor"]
         ships=[]
         board_0 = Board(state_list0, [], False, 6)
-        success = False
         while True: #and attempt < 2000:
-            #seed(1)
             try:
                 dot_rand = Dot(random.randint(1, 6), random.randint(1, 6))
                 ship3 = Ship(3, dot_rand, random.choice(dir), 3)
                 board_0.add_ship(ship3)
             except BoardException:
-                #print(mr)
                 attempt += 1
                 continue
             else:
-                print(attempt)
-                return board_0
-            # finally:
-            #     return board_0
-                #break
-            # board_0.contour()
-            # ships.append(ship3)
-            # print(attempt)
-            # print(len(ships))
-            # return board_0
-        # #board_0.ship_list.append(ship3)
-        # for i in range(2):
-        #     while True:
-        #         if attempt > 2000:
-        #             return None
-        #         dot_rand = Dot(random.randint(1, 6), random.randint(1, 6))
-        #         ship2 = Ship(2, dot_rand, random.choice(dir), 2)
-        #         try:
-        #             board_0.add_ship(ship2)
-        #         except BoardException:
-        #             #print(mr)
-        #             attempt +=1
-        #             continue
-        #         break
-        #     board_0.contour()
-        #     ships.append(ship2)
-        #     #board_0.ship_list.append(ship2)
+                #print(attempt)
+                board_0.contour()
+                ships.append(ship3)
+                #print(len(ships))
+                break
+        #return board_0
+        for i in range(2):
+            while True:
+                #if attempt > 2000:
+                    #return None
+                dot_rand = Dot(random.randint(1, 6), random.randint(1, 6))
+                ship2 = Ship(2, dot_rand, random.choice(dir), 2)
+                try:
+                    board_0.add_ship(ship2)
+                    board_0.contour()
+                except BoardException:
+                    attempt +=1
+                    continue
+                break
+            ships.append(ship2)
+        print(attempt)
+        print(len(ships))
+        return board_0
+            #board_0.ship_list.append(ship2)
         # for i in range(4):
         #     while True:
         #         if attempt > 2000:
