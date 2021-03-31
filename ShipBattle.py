@@ -239,7 +239,10 @@ class Game:
                 board_0.add_ship(ship3)
             except BoardException:
                 attempt += 1
-                continue
+                if attempt > 2000:
+                    return None
+                else:
+                    continue
             else:
                 #print(attempt)
                 board_0.contour()
@@ -258,7 +261,10 @@ class Game:
                     board_0.contour()
                 except BoardException:
                     attempt +=1
-                    continue
+                    if attempt > 2000:
+                        return None
+                    else:
+                        continue
                 break
             ships.append(ship2)
         #print(attempt)
@@ -276,7 +282,10 @@ class Game:
                     board_0.contour()
                 except BoardException:
                     attempt += 1
-                    continue
+                    if attempt > 2000:
+                        return None
+                    else:
+                        continue
                 break
             ships.append(ship1)
         print(len(ships))
@@ -285,13 +294,12 @@ class Game:
 
 game1=Game(1,1,1,1)
 board = game1.random_board()
-board.print_board()
-# while True:
-#     board = game1.random_board()
-#     if board == None:
-#         continue
-#     else:
-#         board.print_board()
+#board.print_board()
+board = game1.random_board()
+while board == None:
+    board = game1.random_board()
+else:
+    board.print_board()
 # state_list0 = []
 # for i in range(1, 7):
 #     for j in range(1, 7):
