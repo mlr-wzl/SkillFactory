@@ -261,27 +261,27 @@ class Game:
                     continue
                 break
             ships.append(ship2)
-        print(attempt)
-        print(len(ships))
-        return board_0
+        #print(attempt)
+        #print(len(ships))
+        #return board_0
             #board_0.ship_list.append(ship2)
-        # for i in range(4):
-        #     while True:
-        #         if attempt > 2000:
-        #             return None
-        #         dot_rand = Dot(random.randint(1, 6), random.randint(1, 6))
-        #         ship1 = Ship(1, dot_rand, random.choice(dir), 1)
-        #         try:
-        #             board_0.add_ship(ship1)
-        #         except BoardException:
-        #             #print(mr)
-        #             attempt += 1
-        #             continue
-        #         break
-        #     board_0.contour()
-        #     ships.append(ship1)
-        # print(len(ships))
-        # return board_0
+        for i in range(4):
+            while True:
+                # if attempt > 2000:
+                #     return None
+                dot_rand = Dot(random.randint(1, 6), random.randint(1, 6))
+                ship1 = Ship(1, dot_rand, random.choice(dir), 1)
+                try:
+                    board_0.add_ship(ship1)
+                    board_0.contour()
+                except BoardException:
+                    attempt += 1
+                    continue
+                break
+            ships.append(ship1)
+        print(len(ships))
+        print(attempt)
+        return board_0
 
 game1=Game(1,1,1,1)
 board = game1.random_board()
