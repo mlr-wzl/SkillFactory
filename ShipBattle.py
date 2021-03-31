@@ -152,7 +152,9 @@ class Board:
                               for i in range(ship.length):
                                   ship_x, ship_y = ship.dots()[i][0], ship.dots()[i][1]
                                   if dot.x == ship_x and dot.y == ship_y:
-                                      ship.lives = ship.lives - 1
+                                    ship.lives = ship.lives - 1
+                                    if ship.lives == 0:
+                                        self.alive_ships = self.alive_ships - 1
                         result = "Hit"
                     else:
                         print("There is empty!")
@@ -241,7 +243,7 @@ class Game:
                 state_list0.append([i, j, "0"])
         dir=["ver", "hor"]
         ships=[]
-        board_0 = Board(state_list0, [], False, 6)
+        board_0 = Board(state_list0, [], False, 7)
         while True:
             try:
                 dot_rand = Dot(random.randint(1, 6), random.randint(1, 6))
@@ -350,6 +352,7 @@ else:
     player_2.move()
     for ship in board.ship_list:
             print(ship.lives)
+    print(board.alive_ships)
 # state_list0 = []
 # for i in range(1, 7):
 #     for j in range(1, 7):
