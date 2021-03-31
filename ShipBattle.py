@@ -43,7 +43,7 @@ class Ship:
                     raise BoardException
                 dots_list.append([x + i, y])
             else:
-                if 0 > x  or x > 6 or 0 > y+i or y+i > 6:
+                if 0 > x or x > 6 or 0 > y+i or y+i > 6:
                     raise BoardException
                 dots_list.append([x, y + i])
 
@@ -73,6 +73,8 @@ class Board:
         else:
             for count, value in enumerate(valid_results):
                 self.state_list[value][2] = "x"
+            #self.ship_list.append(ship.dots())
+            self.ship_list.append(ship)
             return self.state_list
         #except BoardException as mr:
             #print(mr)
@@ -146,6 +148,11 @@ class Board:
                     if self.state_list[i][2] == "x":
                         print("You hit!")
                         self.state_list[i][2] = "s"
+                        for ship in self.ship_list:
+                              for i in range(ship.length):
+                                  ship_x, ship_y = ship.dots()[i][0], ship.dots()[i][1]
+                                  if dot.x == ship_x and dot.y == ship_y:
+                                      ship.lives = ship.lives - 1
                         result = "Hit"
                     else:
                         print("There is empty!")
@@ -217,11 +224,14 @@ class User(Player):
 
 
 class Game:
-    def __init__(self, user, user_board, AI, AI_board):
-        self.user = user
-        self.user_board = self.random_board()
-        self.AI = AI
-        self.AI_board = self.AI_board()
+    def __init__(self, size=6):
+        self.size = size
+        user_board = self.random_board()
+        ai_board = self.random_board()
+        #ai_board.hid = True
+
+        self.ai = AI(ai_board, user_board)
+        self.user = User(user_board, ai_board)
 
     def random_board(self):
         state_list0 = []
@@ -291,18 +301,55 @@ class Game:
         print(" x - номер строки  ")
         print(" y - номер столбца ")
 
-    def loop:
+    # def loop(self):
+    #     num = 0
+    #     while True:
+    #         print("-" * 20)
+    #         print("Доска пользователя:")
+    #         print(self.user.own_board)
+    #         print("-" * 20)
+    #         print("Доска компьютера:")
+    #         print(self.ai.own_board)
+    #         if num % 2 == 0:
+    #             print("-" * 20)
+    #             print("Ходит пользователь!")
+    #             repeat = self.user.move()
+    #         else:
+    #             print("-" * 20)
+    #             print("Ходит компьютер!")
+    #             repeat = self.ai.move()
+    #         if repeat:
+    #             num -= 1
+    #
+    #         if self.ai.own_board.count == 7:
+    #             print("-" * 20)
+    #             print("Пользователь выиграл!")
+    #             break
+    #
+    #         if self.us.board.count == 7:
+    #             print("-" * 20)
+    #             print("Компьютер выиграл!")
+    #             break
+    #         num += 1
+    #
+    # def start(self):
+    #     self.greet()
+    #     self.loop()
 
 
 
-game1=Game(1,1,1,1)
+game1=Game()
 board = game1.random_board()
 #board.print_board()
-board = game1.random_board()
-while board == None:
+while board is None:
     board = game1.random_board()
 else:
     board.print_board()
+    #print(board.ship_list)
+    player_2 = User(board, board)
+    player_2.move()
+    for ship in board.ship_list:
+            print(ship.lives)
 # state_list0 = []
 # for i in range(1, 7):
 #     for j in range(1, 7):
