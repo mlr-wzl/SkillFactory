@@ -232,8 +232,8 @@ class User(Player):
 class Game:
     def __init__(self, size=6):
         self.size = size
-        user_board = self.random_board()
-        ai_board = self.random_board()
+        user_board = self.ran()
+        ai_board = self.ran()
         #ai_board.hid = True
 
         self.ai = AI(ai_board, user_board)
@@ -296,6 +296,14 @@ class Game:
         print(len(ships))
         print(attempt)
         return board_0
+
+    def ran(self):
+        board = self.random_board()
+        while board is None:
+            board = self.random_board()
+        else:
+            return board
+
 
     def greet(self):
         print("-------------------")
