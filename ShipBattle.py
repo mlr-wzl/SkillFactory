@@ -115,10 +115,10 @@ class Board:
                     x, y = self.state_list[i][0], self.state_list[i][1]
                     if self.state_list[i][2] == "x":
                         board[x-1][y-1] = "■"
-                    # if self.state_list[i][2] == "xs":
-                    #     board[x - 1][y - 1] = "xs"
-                    # if self.state_list[i][2] == "s":
-                    #     board[x - 1][y - 1] = "s"
+                    elif self.state_list[i][2] == "T":
+                        board[x - 1][y - 1] = "T"
+                    elif self.state_list[i][2] == "s":
+                        board[x - 1][y - 1] = "s"
                     else:
                         board[x-1][y-1] = "О"
             print()
@@ -146,12 +146,12 @@ class Board:
                 raise Error("Dot outside of the board!")
             for i in range(len(self.state_list)):
                 if dot.x == self.state_list[i][0] and dot.y == self.state_list[i][1]:
-                    if self.state_list[i][2] == "s": #or self.state_list[i][2] == "xs"
+                    if self.state_list[i][2] == "s" or self.state_list[i][2] == "T":
                         result = "Already shot"
                         raise Error("You already shot there.")
                     if self.state_list[i][2] == "x":
                         print("You hit!")
-                        self.state_list[i][2] = "x"
+                        self.state_list[i][2] = "T"
                         for ship in self.ship_list:
                               for i in range(ship.length):
                                   ship_x, ship_y = ship.dots()[i][0], ship.dots()[i][1]
@@ -234,7 +234,7 @@ class Game:
         self.size = size
         user_board = self.ran()
         ai_board = self.ran()
-        #ai_board.hid = True
+        ai_board.hid = False
 
         self.ai = AI(ai_board, user_board)
         self.user = User(user_board, ai_board)
