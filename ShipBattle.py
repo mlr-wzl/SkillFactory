@@ -1,17 +1,17 @@
-#
-# класс всех исключений
-
 import random
 
+# inner logic
+
+# Exception Classes
 class Error(Exception):
     def __init__(self, text):
         self.text = text
 
 class BoardException(Exception):
     def __str__(self):
-        return "Корабль не добавить"
+        return "Action with Board not possible"
 
-# класс точек
+# Dot class
 class Dot:
     def __init__(self, x, y):
         self.x = x
@@ -30,6 +30,7 @@ class Ship:
         self.direction = direction
         self.lives = lives
 
+# method for showing dots of the ship
     def dots(self):
         dots_list = []
         x,y = self.start_dot.x, self.start_dot.y
@@ -52,31 +53,25 @@ class Board:
         self.hid = hid
         self.alive_ships = alive_ships
 
+    # method for adding ships on the board
     def add_ship(self, ship):
-        #attempt = 0
         valid_results=[]
         for i in range(len(self.state_list)):
             for j in range(ship.length):
                     if self.state_list[i][0] == ship.dots()[j][0] and self.state_list[i][1] == ship.dots()[j][1]:
                         if self.state_list[i][2] == "0":
                             valid_results.append(i)
-                            #self.state_list[i][2] = "x"
                         else:
-                            #raise Error("You cannot place your ship there!"
                             raise BoardException()
         if len(valid_results) < ship.length:
             raise BoardException()
         else:
             for count, value in enumerate(valid_results):
                 self.state_list[value][2] = "x"
-            #self.ship_list.append(ship.dots())
             self.ship_list.append(ship)
             return self.state_list
-        #except BoardException as mr:
-            #print(mr)
-        #finally:
-            # return self.state_list
 
+    # method for contouring the ship
     def contour(self):
       try:
             for i in range(len(self.state_list)):
@@ -104,6 +99,7 @@ class Board:
       finally:
         return self.state_list
 
+    # method for printing the board in dependance of self.hid
     def print_board(self):
         board = [[" "] * 6 for i in range(1,7)]
         if not self.hid:
@@ -126,20 +122,37 @@ class Board:
                 print("  --------------------------- ")
             print()
         else:
-            print("No board to print, sorry")
+            for i in range(len(self.state_list)):
+                    x, y = self.state_list[i][0], self.state_list[i][1]
+                    if self.state_list[i][2] == "T":
+                        board[x - 1][y - 1] = "T"
+                    elif self.state_list[i][2] == "s":
+                        board[x - 1][y - 1] = "s"
+                    else:
+                        board[x-1][y-1] = "О"
+            print()
+            print("    | 1 | 2 | 3 | 4 | 5 | 6 |")
+            print("  --------------------------- ")
+            for i, row in enumerate(board):
+                row_str = f"  {i+1} | {' | '.join(row)} | "
+                print(row_str)
+                print("  --------------------------- ")
+            print()
 
+    # method for showing whether dot is outside
     def out(self, dot):
         if dot.x < 1 or dot.x > 6 or dot.y < 1 or dot.y > 6:
             return True
         else:
             return False
 
+    # method for shooting ships
     def shoot(self, dot):
         result = ""
         try:
             if self.out(dot):
                 result = "Outside"
-                raise Error("Dot outside of the board!")
+                raise Error("Dot outside of the board!. Please try again")
             for i in range(len(self.state_list)):
                 if dot.x == self.state_list[i][0] and dot.y == self.state_list[i][1]:
                     if self.state_list[i][2] == "s" or self.state_list[i][2] == "T":
@@ -162,7 +175,7 @@ class Board:
                         self.state_list[i][2] = "s"
                         result = "Empty"
         except Error as mr:
-            print(mr)
+             print(mr)
         finally:
             return result
 
@@ -174,11 +187,13 @@ class Player:
         self.own_board = own_board
         self.foreign_board = foreign_board
 
+    # method for asking the input, defined in daughter classes
     def ask(self):
         return
-        #pass
 
+    # method for playing turns
     def move(self):
+        repeat = True
         while True:
             try:
                 x, y = self.ask()
@@ -201,6 +216,7 @@ class AI(Player):
     def __init__(self, own_board, foreign_board):
         super().__init__(own_board, foreign_board)
 
+# method for asking ai coordinates - random numbers
     def ask(self):
         x, y = random.randint(1,6), random.randint(1,6)
         return x, y
@@ -210,12 +226,16 @@ class User(Player):
     def __init__(self, own_board, foreign_board):
         super().__init__(own_board, foreign_board)
 
+    # method for asking user coordinates - input
     def ask(self):
         while True:
             try:
                 coord = input("Please, input the coordinates of the target in the format: x y : " ).split()
                 x, y = coord
-            except ValueError:
+                if not x.isdigit() or not y.isdigit():
+                    print("Please input numbers! ")
+                    continue
+            except:
                 print("That was not a suitable input. Please try again.")
                 continue
             else:
@@ -228,11 +248,12 @@ class Game:
         self.size = size
         user_board = self.ran()
         ai_board = self.ran()
-        ai_board.hid = False
+        ai_board.hid = True
 
         self.ai = AI(ai_board, user_board)
         self.user = User(user_board, ai_board)
 
+    # method for generating a random board according to all rules
     def random_board(self):
         state_list0 = []
         attempt=0
@@ -240,7 +261,6 @@ class Game:
             for j in range(1, 7):
                 state_list0.append([i, j, "0"])
         dir=["ver", "hor"]
-        ships=[]
         board_0 = Board(state_list0, [], False, 7)
         while True:
             try:
@@ -256,7 +276,6 @@ class Game:
                     continue
             else:
                 break
-        ships.append(ship3)
         for i in range(2):
             while True:
                 dot_rand = Dot(random.randint(1, 6), random.randint(1, 6))
@@ -271,7 +290,6 @@ class Game:
                     else:
                         continue
                 break
-            ships.append(ship2)
         for i in range(4):
             while True:
                 dot_rand = Dot(random.randint(1, 6), random.randint(1, 6))
@@ -286,9 +304,9 @@ class Game:
                     else:
                         continue
                 break
-            ships.append(ship1)
         return board_0
 
+    # method for generating board again if too many attempts with the first one
     def ran(self):
         board = self.random_board()
         while board is None:
@@ -296,7 +314,7 @@ class Game:
         else:
             return board
 
-
+    # greeting method
     def greet(self):
         print("-------------------")
         print("  Welcome ")
@@ -307,6 +325,7 @@ class Game:
         print(" x - row number  ")
         print(" y - column number ")
 
+    # playing loop
     def loop(self):
         num = 0
         while True:
@@ -341,6 +360,7 @@ class Game:
     def start(self):
         self.greet()
         self.loop()
+
 
 g = Game()
 g.start()
