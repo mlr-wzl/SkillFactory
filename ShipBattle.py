@@ -1,10 +1,7 @@
-# внутренняя логика
+#
 # класс всех исключений
-#from __future__ import print_function
 
 import random
-from random import seed
-import sys
 
 
 class Error(Exception):
@@ -148,9 +145,9 @@ class Board:
                 if dot.x == self.state_list[i][0] and dot.y == self.state_list[i][1]:
                     if self.state_list[i][2] == "s" or self.state_list[i][2] == "T":
                         result = "Already shot"
-                        raise Error("You already shot there.")
+                        raise Error("You already shot there. Try again")
                     if self.state_list[i][2] == "x":
-                        print("You hit!")
+                        print("You hit! Try again")
                         self.state_list[i][2] = "T"
                         for ship in self.ship_list:
                               for i in range(ship.length):
@@ -159,6 +156,7 @@ class Board:
                                     ship.lives = ship.lives - 1
                                     if ship.lives == 0:
                                         self.alive_ships = self.alive_ships - 1
+                                        print("A ship is dead!")
                         result = "Hit"
                     else:
                         print("There is empty!")
@@ -187,13 +185,10 @@ class Player:
                 x, y = self.ask()
                 dot = Dot(x,y)
                 result = self.foreign_board.shoot(dot)
-                #print(result)
-                if result == "Hit":
-                    #print("Wow! You hit!")
+                if result == "Hit" or result == "Already shot" or result == "Outside":
                     repeat = True
                     break
                 else:
-                    #print(result)
                     repeat = False
                     break
             except Error:
@@ -293,8 +288,6 @@ class Game:
                         continue
                 break
             ships.append(ship1)
-        print(len(ships))
-        print(attempt)
         return board_0
 
     def ran(self):
@@ -307,42 +300,42 @@ class Game:
 
     def greet(self):
         print("-------------------")
-        print("  Приветствуем вас  ")
-        print("      в игре       ")
-        print("    Морской бой    ")
+        print("  Welcome ")
+        print("  in the game      ")
+        print("    Ship Battle    ")
         print("-------------------")
-        print(" формат ввода: x y ")
-        print(" x - номер строки  ")
-        print(" y - номер столбца ")
+        print(" input format: x y ")
+        print(" x - row number  ")
+        print(" y - column number ")
 
     def loop(self):
         num = 0
         while True:
             print("-" * 20)
-            print("Доска пользователя:")
+            print("User board:")
             self.user.own_board.print_board()
             print("-" * 20)
-            print("Доска компьютера:")
-            print(self.ai.own_board.print_board())
+            print("AI board:")
+            self.ai.own_board.print_board()
             if num % 2 == 0:
                 print("-" * 20)
-                print("Ходит пользователь!")
+                print("User, it´s your turn!")
                 repeat = self.user.move()
             else:
                 print("-" * 20)
-                print("Ходит компьютер!")
+                print("AI, it´s your turn!")
                 repeat = self.ai.move()
             if repeat:
                 num -= 1
 
             if self.ai.own_board.alive_ships == 0:
                 print("-" * 20)
-                print("Пользователь выиграл!")
+                print("User wins!")
                 break
 
             if self.ai.own_board.alive_ships == 0:
                 print("-" * 20)
-                print("Компьютер выиграл!")
+                print("AI wins!")
                 break
             num += 1
 
@@ -353,81 +346,7 @@ class Game:
 g = Game()
 g.start()
 
-# game1=Game()
-# board = game1.random_board()
-# #board.print_board()
-# while board is None:
-#     board = game1.random_board()
-# else:
-#     board.print_board()
-#     #print(board.ship_list)
-#     player_2 = User(board, board)
-#     player_2.move()
-#     for ship in board.ship_list:
-#             print(ship.lives)
-#     print(board.alive_ships)
 
-
-# state_list0 = []
-# for i in range(1, 7):
-#     for j in range(1, 7):
-#         state_list0.append([i, j, "0"])
-# board_0 = Board(state_list0, [], False, 6)
-# while True:
-#     game1.random_board()
-#     if game1.random_board() == None:
-#         continue
-#     else:
-#         game1.random_board().print_board()
-#         break
-
-
-
-
-
-board = []
-for x in range(0, 6):
-    board.append(["0"] * 6)
-#print(board)
-state_list1=[]
-for i in range(1,7):
-    for j in range(1,7):
-        state_list1.append([i,j,"0"])
-
-dot_1 = Dot(6,4)
-dot_s = Dot(6,6)
-dot_s2=Dot(5,6)
-ship_1 = Ship(3, dot_1, "hor", 3)
-ship_2 = Ship(1, dot_s2, "ver", 1)
-#print(ship_1.dots())
-board_1=Board(state_list1, 1, False, 2)
-#print(board_1.add_ship(ship_1))
-#board_1.add_ship(ship_1)
-#board_1.print_board()
-#board_1.add_ship(ship_1)
-#board_1.contour()
-#board_1.add_ship(ship_2)
-#print(board_1.contour())
-#board_1.print_board()
-#print(board_1.out(dot_s))
-# print(board_1.shoot(dot_s))
-#board_1.shoot(dot_s2)
-#board_1.print_board()
-#player_1 = AI(board_1, board_1)
-#player_2 = User(board_1, board_1)
-#print(board_1.shoot(dot_s))
-#board_1.print_board()
-#print(player_2.foreign_board.add_ship(ship_1))
-#print(player_2.foreign_board.contour())
-#print(player_2.foreign_board.shoot(dot_s))
-#print(player_2.foreign_board.print_board())
-
-#print(player_1.ask())
-#player_2.ask()
-#player_2.move()
-#print(player_2.move())
-#player_2.foreign_board.print_board()
-#board_1.print_board()
 
 
 
