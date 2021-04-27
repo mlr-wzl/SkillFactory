@@ -3,4 +3,8 @@ keys={
     'euro' : 'EUR',
     'dollar' : 'USD',
     'ruble' : 'RUB',
+    'frank' : 'CHF',
+    'hriwnja' : 'UAH',
+    'yena' : 'JPY'
+
 }

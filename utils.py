@@ -5,7 +5,7 @@ from config import keys
 class ConvertionException(Exception):
     pass
 
-class CryptoConverter:
+class Converter:
     @staticmethod
     def convert(quote: str, base: str, amount: str):
 
