@@ -1,6 +1,6 @@
 import telebot
 from config import keys, TOKEN
-from utils import ConvertionException, Converter
+from utils import APIException, Converter
 
 bot = telebot.TeleBot(TOKEN)
 @bot.message_handler(commands=['start', 'help'])
@@ -25,10 +25,10 @@ def convert(message: telebot.types.Message):
     try:
         values = message.text.split(' ')
         if len(values) != 3:
-            raise ConvertionException('False amount of parameters')
+            raise APIException('False amount of parameters')
         quote, base, amount = [each_value.lower() for each_value in values]
         total_base = Converter.convert(quote, base, amount)
-    except ConvertionException as e:
+    except APIException as e:
         bot.reply_to(message, f"User's error: {e}")
     except Exception as e:
         bot.reply_to(message, f"Processing your request was not possible because of {e}")
