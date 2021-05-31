@@ -1,0 +1,36 @@
+{% extends 'flatpages/layout.html' %}
+{% load custom_filters %}
+
+<!-- Название у нас будет proudcts -->
+{% block title %}
+News
+{% endblock title %}
+
+<!-- В контенте на странице мы выводим сам товар, айди которого было передано в адрес -->
+{% block content %}
+    <hr>
+        <table>
+            <tr>
+                <td>
+                    Заголовок
+                </td>
+                <td>
+                    Дата публикации
+                </td>
+                <td>
+                    Cодержание
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{ onenews.title|censor }}
+                </td>
+                <td>
+                    {{ onenews.time|date:'d-M-Y H:m' }}
+                </td>
+                <td>
+                    {{ onenews.text|censor }}
+                </td>
+            </tr>
+        </table>
+{% endblock content %}
