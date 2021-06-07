@@ -5,6 +5,8 @@ from django.views.generic import ListView, UpdateView, CreateView, DetailView, D
 from .filters import NewsFilter
 from .forms import NewsForm  # импортируем нашу форму
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
+
 
 # Create your views here.
 class NewsList(ListView):
@@ -29,11 +31,13 @@ class NewsDetailView(DetailView):
     template_name = 'news_detail.html'  # название шаблона будет onenews.html
     context_object_name = 'onenews'  # название объекта. в нём будет
 
-class NewsCreateView(CreateView):
+class NewsCreateView(PermissionRequiredMixin, CreateView):
+    permission_required=('news.add_post')
     template_name = 'news_create.html'
     form_class = NewsForm
 
-class NewsUpdateView(LoginRequiredMixin, UpdateView):
+class NewsUpdateView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
+    permission_required = ('news.change_post')
     template_name = 'news_create.html'
     form_class = NewsForm
 
