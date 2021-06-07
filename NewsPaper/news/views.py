@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.views.generic import ListView, UpdateView, CreateView, DetailView, DeleteView # импортируем уже знакомый generic
 from .filters import NewsFilter
 from .forms import NewsForm  # импортируем нашу форму
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 class NewsList(ListView):
@@ -32,7 +33,7 @@ class NewsCreateView(CreateView):
     template_name = 'news_create.html'
     form_class = NewsForm
 
-class NewsUpdateView(UpdateView):
+class NewsUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'news_create.html'
     form_class = NewsForm
 
