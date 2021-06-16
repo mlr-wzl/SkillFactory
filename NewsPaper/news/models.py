@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 class Author(models.Model):  # наследуемся от класса Model
     ranking = models.IntegerField(default=0)
     author = models.OneToOneField(User, on_delete=models.CASCADE)
+    #author = models.OneToOneField('auth.User', on_delete=models.CASCADE)
 
     def update_rating(self):
         author_posts = Post.objects.filter(author = self.id, type = 'Article')
@@ -28,7 +29,10 @@ class Author(models.Model):  # наследуемся от класса Model
 
 class Category(models.Model):
     name = models.CharField(max_length=64, default = "No category", unique=True)
+    subscribers = models.ManyToManyField(User)
 
+    def __str__(self):
+        return f'{self.name}'
 
 class Post(models.Model):
     news='News'
@@ -37,6 +41,7 @@ class Post(models.Model):
         (news, 'News'),
         (article, 'Article')
     ]
+    #author = models.ForeignKey(Author, on_delete=models.CASCADE)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     type = models.CharField(max_length=10, choices=Posts, default=news)
     time = models.DateTimeField(auto_now_add = True)
@@ -60,6 +65,7 @@ class Post(models.Model):
 
     def __str__(self):
         return f'{self.title.title()}: {self.text[:125]}'
+
 
     def get_absolute_url(self):  # добавим абсолютный путь, чтобы после создания нас перебрасывало на страницу с товаром
         return f'/news/{self.id}'

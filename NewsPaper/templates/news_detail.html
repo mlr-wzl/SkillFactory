@@ -31,6 +31,22 @@ News
                 <td>
                     {{ onenews.text|censor }}
                 </td>
+                <td>
+                    {{ onenews.category }}
+                </td>
+                <td>
+                {% for category in onenews.category.all %}
+                        {{ category.name }}<br>
+                {% endfor %}
+                </td>
+                    <td>
+                    {% for category in onenews.category.all %}
+                    <form action="{% url 'subscribe' category.pk %}" method="POST">
+                    {% csrf_token%}
+                    <button type="submit" value="{{ category }}">Подписаться на категорию</button>
+                    </form>
+                    {% endfor %}
+                    </td>
             </tr>
         </table>
 {% endblock content %}

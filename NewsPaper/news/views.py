@@ -1,12 +1,16 @@
 from django.views.generic import ListView, DetailView  # импортируем класс, который говорит нам о том, что в этом представлении мы будем выводить список объектов из БД
 from .models import *
 from django.shortcuts import render
-from django.views.generic import ListView, UpdateView, CreateView, DetailView, DeleteView # импортируем уже знакомый generic
+from django.views.generic import ListView, UpdateView, CreateView, DetailView, DeleteView, View # импортируем уже знакомый generic
 from .filters import NewsFilter
+from django.core.mail import send_mail
 from .forms import NewsForm  # импортируем нашу форму
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
-
+from django.shortcuts import render, redirect, reverse, get_object_or_404
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.contrib.auth.models import User
 
 # Create your views here.
 class NewsList(ListView):
@@ -21,11 +25,6 @@ class NewsList(ListView):
         context['filter'] = NewsFilter(self.request.GET, queryset=self.get_queryset())  # вписываем наш фильтр в контекст
         return context
 
-# class NewsDetail(DetailView):
-#     model = Post  # модель всё та же, но мы хотим получать детали конкретно отдельного товара
-#     template_name = 'onenews.html'  # название шаблона будет onenews.html
-#     context_object_name = 'onenews'  # название объекта. в нём будет
-
 class NewsDetailView(DetailView):
     model = Post  # модель всё та же, но мы хотим получать детали конкретно отдельного товара
     template_name = 'news_detail.html'  # название шаблона будет onenews.html
@@ -35,6 +34,67 @@ class NewsCreateView(PermissionRequiredMixin, CreateView):
     permission_required=('news.add_post')
     template_name = 'news_create.html'
     form_class = NewsForm
+
+    def post(self, request, *args, **kwargs):
+        html_content = render_to_string(
+                'update_created.html',
+                {
+                    'title': request.POST.get('title'),
+                    'text': request.POST.get('text')
+
+                }
+            )
+        users=User.objects.all()
+        #print(users)
+        category=Category.objects.all()
+        #print(category)
+        category_1 = get_object_or_404(Category, pk=1)
+        category_2=request.POST.get('category')
+        category_3=Category.objects.get(id=category_2)
+        subscribers=category_3.subscribers.all()
+        title=request.POST.get('title')
+        #print(subscribers)
+        #print(category_1)
+        print(category_2)
+        print(str(title))
+        if subscribers.exists():
+            for subscriber in subscribers:
+                print(subscriber.username)
+                msg = EmailMultiAlternatives(
+                subject=f'{str(title)}',
+                body=f'Здравствуй {subscriber.username}. Новая статья в твоём любимом разделе!',  # это то же, что и message
+                from_email='aleresunova060595@gmail.com',
+                #to=[f'{subscriber.email}'],  # это то же, что и recipients_list
+                to=['aleresunova@mail.ru']
+                )
+                msg.attach_alternative(html_content, "text/html")  # добавляем html
+
+                msg.send()  # отсылаем
+        return super(NewsCreateView, self).post(request, **kwargs)
+
+    # def get(self, request, *args, **kwargs):
+    #     return render(request, 'update_created.html', {})
+    #     #return render(request, 'update_created.html', [])
+    #
+    # def post(self, request, *args, **kwargs):
+        # news = Post(
+        #     #author=request.user,
+        #     author=request.POST['author'],
+        #     title=request.POST['title'],
+        #     text=request.POST['text'],
+        #     #author=request.POST['author'],
+        #     type=request.POST['type'],
+        #     category=request.POST['category'],
+        # )
+        # news.save()
+        # user = self.request.user
+        # # получаем наш html
+        # html_content = render_to_string(
+        #     'update_created.html',
+        #     {
+        #         'news': news,
+        #     }
+        # )
 
 class NewsUpdateView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
     permission_required = ('news.change_post')
@@ -62,3 +122,22 @@ class NewsSearchList(ListView):
         context = super().get_context_data(**kwargs)
         context['filter'] = NewsFilter(self.request.GET, queryset=self.get_queryset())  # вписываем наш фильтр в контекст
         return context
+
+
+class Subscribe(LoginRequiredMixin, View):
+    model = Category
+    def post(self, request, *args, **kwargs):
+        user = self.request.user
+        print(user)
+        category = get_object_or_404(Category, id=self.kwargs['pk'])
+        print(category)
+        if category.subscribers.filter(username=self.request.user).exists():
+            category.subscribers.remove(user)
+        else:
+            category.subscribers.add(user)
+            print(category.subscribers)
+
+        return redirect('/')
+
+
+
