@@ -8,9 +8,28 @@ from .forms import NewsForm  # импортируем нашу форму
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.shortcuts import render, redirect, reverse, get_object_or_404
-from django.core.mail import EmailMultiAlternatives
+from django.core.mail import EmailMultiAlternatives, mail_managers, mail_admins
 from django.template.loader import render_to_string
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+
+# @receiver(post_save, sender=Post)
+# def notify_managers_appointment(sender, instance, created, **kwargs):
+#     #subject = f'{instance.title}'
+#     if created:
+#         subject = f'{instance.title}'
+#     else:
+#         subject = f'{instance.title} changed'
+#     mail_managers(
+#         subject=subject,
+#         message=instance.text,
+#     )
+#     print(f'{instance.title}')
+
+# коннектим наш сигнал к функции обработчику и указываем, к какой именно модели после сохранения привязать функцию
+# post_save.connect(notify_managers_appointment, sender=Post)
 
 # Create your views here.
 class NewsList(ListView):
