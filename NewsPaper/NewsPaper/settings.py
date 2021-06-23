@@ -134,9 +134,10 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+#USE_TZ = True
+USE_TZ=False
 
-
+#DATE_INPUT_FORMATS = ["%Y-%m-%d %H:%M:%S.%f"]
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
@@ -181,7 +182,8 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 MANAGERS=[('Aleks', 'aleresunova060595@gmail.com')]
 
 # формат даты, которую будет воспринимать наш задачник (вспоминаем модуль по фильтрам)
-APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
+#APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
+APSCHEDULER_DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S.%f"
 
 # если задача не выполняется за 25 секунд, то она автоматически снимается, можете поставить время побольше, но как правило, это сильно бьёт по производительности сервера
 APSCHEDULER_RUN_NOW_TIMEOUT = 25  # Seconds

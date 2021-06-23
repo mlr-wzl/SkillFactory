@@ -15,22 +15,6 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
-# @receiver(post_save, sender=Post)
-# def notify_managers_appointment(sender, instance, created, **kwargs):
-#     #subject = f'{instance.title}'
-#     if created:
-#         subject = f'{instance.title}'
-#     else:
-#         subject = f'{instance.title} changed'
-#     mail_managers(
-#         subject=subject,
-#         message=instance.text,
-#     )
-#     print(f'{instance.title}')
-
-# коннектим наш сигнал к функции обработчику и указываем, к какой именно модели после сохранения привязать функцию
-# post_save.connect(notify_managers_appointment, sender=Post)
-
 # Create your views here.
 class NewsList(ListView):
     model = Post  # указываем модель, объекты которой мы будем выводить
@@ -55,27 +39,19 @@ class NewsCreateView(PermissionRequiredMixin, CreateView):
     form_class = NewsForm
 
     def post(self, request, *args, **kwargs):
+
         html_content = render_to_string(
                 'update_created.html',
                 {
                     'title': request.POST.get('title'),
-                    'text': request.POST.get('text')
-
+                    'text': request.POST.get('text'),
+                    'post': Post.objects.all().last().id+1,
                 }
             )
-        users=User.objects.all()
-        #print(users)
-        category=Category.objects.all()
-        #print(category)
-        category_1 = get_object_or_404(Category, pk=1)
         category_2=request.POST.get('category')
-        category_3=Category.objects.get(id=category_2)
+        category_3 = Category.objects.get(id=category_2)
         subscribers=category_3.subscribers.all()
         title=request.POST.get('title')
-        #print(subscribers)
-        #print(category_1)
-        print(category_2)
-        print(str(title))
         if subscribers.exists():
             for subscriber in subscribers:
                 print(subscriber.username)
@@ -83,37 +59,14 @@ class NewsCreateView(PermissionRequiredMixin, CreateView):
                 subject=f'{str(title)}',
                 body=f'Здравствуй {subscriber.username}. Новая статья в твоём любимом разделе!',  # это то же, что и message
                 from_email='aleresunova060595@gmail.com',
-                #to=[f'{subscriber.email}'],  # это то же, что и recipients_list
-                to=['aleresunova@mail.ru']
+                to=[f'{subscriber.email}'],  # это то же, что и recipients_list
+                #to=['aleresunova@mail.ru']
                 )
                 msg.attach_alternative(html_content, "text/html")  # добавляем html
 
                 msg.send()  # отсылаем
         return super(NewsCreateView, self).post(request, **kwargs)
 
-    # def get(self, request, *args, **kwargs):
-    #     return render(request, 'update_created.html', {})
-    #     #return render(request, 'update_created.html', [])
-    #
-    # def post(self, request, *args, **kwargs):
-        # news = Post(
-        #     #author=request.user,
-        #     author=request.POST['author'],
-        #     title=request.POST['title'],
-        #     text=request.POST['text'],
-        #     #author=request.POST['author'],
-        #     type=request.POST['type'],
-        #     category=request.POST['category'],
-        # )
-        # news.save()
-        # user = self.request.user
-        # # получаем наш html
-        # html_content = render_to_string(
-        #     'update_created.html',
-        #     {
-        #         'news': news,
-        #     }
-        # )
 
 class NewsUpdateView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
     permission_required = ('news.change_post')

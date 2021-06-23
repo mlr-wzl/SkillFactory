@@ -1,5 +1,6 @@
 import logging
 import datetime
+from datetime import datetime as dt
 
 from django.conf import settings
 
@@ -20,43 +21,42 @@ logger = logging.getLogger(__name__)
 
 
 def my_job():
-    end_date = datetime.datetime.now()
+    end_date = datetime.datetime.now().date()
+
+    #end_date = datetime.datetime
+    #print(end_date)
     start_date = end_date - datetime.timedelta(days=7)
-    print('выполнение началось')
-    for u in User.objects.all():
-        if len(u.category_set.all()) > 0:
-            list_of_posts = Post.objects.filter(time__range=(start_date, end_date),
-                                                category__in=u.category_set.all())
-            html_content = render_to_string(
+    #print(start_date)
+    #print('выполнение началось')
+    users = User.objects.all()
+    #print(users)
+    categories = Category.objects.all()
+    #print(categories)
+    #subscribers = category_3.subscribers.all()
+    for one_category in categories:
+        subscribers = one_category.subscribers.all()
+        #print(category)
+        if subscribers.exists():
+            for subscriber in subscribers:
+                list_of_posts = Post.objects.filter(time__range=(start_date, end_date), category=one_category)
+                print(list_of_posts)
+                html_content = render_to_string(
                 'subs_email_each_month.html',
                 {
                     'news': list_of_posts,
-                    'usr': u,
+                    'usr': subscriber,
                 }
-            )
-
-    users = User.objects.all()
-    # print(users)
-    categories = Category.objects.all()
-    # print(category)
-    #subscribers = category_3.subscribers.all()
-    for category in categories:
-        subscribers = category.subscribers.all()
-        if subscribers.exists():
-            for subscriber in subscribers:
+                )
                 print(subscriber.username)
                 msg = EmailMultiAlternatives(
                 subject='New posts of the week',
                 body=f'Здравствуй {subscriber.username}. Новые статьи в твоём любимом разделе!',  # это то же, что и message
                 from_email='aleresunova060595@gmail.com',
-                #to=[f'{subscriber.email}'],  # это то же, что и recipients_list
-                to=['aleresunova@mail.ru']
+                to=[f'{subscriber.email}'],  # это то же, что и recipients_list
+                #to=['aleresunova@mail.ru']
                 )
                 msg.attach_alternative(html_content, "text/html")  # добавляем html
                 msg.send()  # отсылаем
-
-
-
 
 
 # функция, которая будет удалять неактуальные задачи
@@ -75,7 +75,7 @@ class Command(BaseCommand):
         # добавляем работу нашему задачнику
         scheduler.add_job(
             my_job,
-            trigger=CronTrigger(second="*/10"),
+            trigger=CronTrigger(day="*/7"),
             # То же, что и интервал, но задача тригера таким образом более понятна django
             id="my_job",  # уникальный айди
             max_instances=1,

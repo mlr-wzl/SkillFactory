@@ -35,6 +35,7 @@ class Category(models.Model):
         return f'{self.name}'
 
 class Post(models.Model):
+    DATE_INPUT_FORMATS = ["%Y-%m-%d %H:%M:%S.%f"]
     news='News'
     article='Article'
     Posts = [
