@@ -20,15 +20,16 @@ services:
 
   celery:
     build: .
-    command: celery -A NewsPaper worker -l info
+    # command: celery -A NewsPaper worker -l info # command for sending emails
+    command: celery -A NewsPaper worker -l info -B #command for periodical tasks
     volumes:
       - .:/code
     depends_on:
       - redis
   celery-beat:
     build: .
-    #command: celery -A NewsPaper worker -l INFO -B
-    command: celery -A proj worker -l info
+    command: celery -A NewsPaper worker -l INFO -B
+    #command: celery -A NewsPaper worker -l info
     volumes:
       - .:/code
     depends_on:

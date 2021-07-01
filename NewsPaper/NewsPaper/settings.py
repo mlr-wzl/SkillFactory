@@ -174,7 +174,7 @@ EMAIL_HOST ='smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'aleresunova060595@gmail.com'
-EMAIL_HOST_PASSWORD ='xxx'
+EMAIL_HOST_PASSWORD ='?alexandra2020R?123'
 EMAIL_USE_SSL = False
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
@@ -188,8 +188,8 @@ APSCHEDULER_DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S.%f"
 # если задача не выполняется за 25 секунд, то она автоматически снимается, можете поставить время побольше, но как правило, это сильно бьёт по производительности сервера
 APSCHEDULER_RUN_NOW_TIMEOUT = 25  # Seconds
 
-CELERY_BROKER_URL = 'redis://localhost:6379'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_BROKER_URL = 'redis://redis:6379'
+CELERY_RESULT_BACKEND = 'redis://redis:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'

@@ -13,7 +13,7 @@ from django.template.loader import render_to_string
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
+from .tasks import mail_to_subs
 
 # Create your views here.
 class NewsList(ListView):
@@ -54,17 +54,21 @@ class NewsCreateView(PermissionRequiredMixin, CreateView):
         title=request.POST.get('title')
         if subscribers.exists():
             for subscriber in subscribers:
-                print(subscriber.username)
-                msg = EmailMultiAlternatives(
-                subject=f'{str(title)}',
-                body=f'Здравствуй {subscriber.username}. Новая статья в твоём любимом разделе!',  # это то же, что и message
-                from_email='aleresunova060595@gmail.com',
-                to=[f'{subscriber.email}'],  # это то же, что и recipients_list
-                #to=['aleresunova@mail.ru']
-                )
-                msg.attach_alternative(html_content, "text/html")  # добавляем html
-
-                msg.send()  # отсылаем
+                mail_to_subs.delay(subscriber.username, subscriber.email, title, html_content)
+        # commented out for mails without celery
+        # if subscribers.exists():
+        #     for subscriber in subscribers:
+        #         print(subscriber.username)
+        #         msg = EmailMultiAlternatives(
+        #         subject=f'{str(title)}',
+        #         body=f'Здравствуй {subscriber.username}. Новая статья в твоём любимом разделе!',  # это то же, что и message
+        #         from_email='aleresunova060595@gmail.com',
+        #         to=[f'{subscriber.email}'],  # это то же, что и recipients_list
+        #         #to=['aleresunova@mail.ru']
+        #         )
+        #         msg.attach_alternative(html_content, "text/html")  # добавляем html
+        #
+        #         msg.send()  # отсылаем
         return super(NewsCreateView, self).post(request, **kwargs)
 
 
