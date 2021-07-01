@@ -177,7 +177,6 @@ MANAGERS=[('Aleks', 'aleresunova060595@gmail.com')]
 
 APSCHEDULER_DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S.%f"
 
-# если задача не выполняется за 25 секунд, то она автоматически снимается, можете поставить время побольше, но как правило, это сильно бьёт по производительности сервера
 APSCHEDULER_RUN_NOW_TIMEOUT = 25  # Seconds
 
 CELERY_BROKER_URL = 'redis://redis:6379'
