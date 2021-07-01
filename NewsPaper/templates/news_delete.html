@@ -1,0 +1,37 @@
+{% extends 'flatpages/layout.html' %}
+{% load custom_filters %}
+
+{% block title %} News list {% endblock title %}
+
+{% block content %}
+<h2>Вы действительно хотите удалить эту новость?</h2>
+    <hr>
+        <table>
+            <tr>
+                <td>
+                    Заголовок
+                </td>
+                <td>
+                    Дата публикации
+                </td>
+                <td>
+                    Cодержание
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{ onenews.title|censor }}
+                </td>
+                <td>
+                    {{ onenews.time|date:'d-M-Y H:m' }}
+                </td>
+                <td>
+                    {{ onenews.text|censor }}
+                </td>
+            </tr>
+        </table>
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="submit" value="подтвердить"></form>
+{% endblock content %}

@@ -1,0 +1,20 @@
+{% load custom_filters %}
+
+{% block content %}
+<h2>Hello! There are some news especially for you, {{ usr }}</h2>
+{% for onenews in news %} <!-- Для каждого товара будете генерироваться новая строчка, т. е. новый html-код. При этом сам цикл работает точно также, как и в Python. product — переменная цикла, т. е. наш товар, взятый из общего списка -->
+            <tr>
+                <td>
+                    <a href=" http://127.0.0.1:8000{% url 'news_detail' onenews.id %}">{{ onenews.title|censor}}</a>
+                    <!-- При нажатии на имя товара в таблице нас теперь будет перекидывать на страницу с информацией о товаре -->
+                </td>
+                <td>
+                    {{ onenews.time|date:'d-M-Y H:m' }}
+                </td>
+                <td>
+                    {{ onenews.text|truncatechars:20|censor}}
+                </td>
+            </tr>
+        {% endfor %}
+
+{% endblock content %}
