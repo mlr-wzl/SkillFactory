@@ -9,7 +9,7 @@ LevelFilter:
 Variables
 ----------
 log_set:
-    Dict logging settings for settings.py
+    Dict logging settings for settings.py of NewsPaper
 """
 
 class LevelFilter(object):
