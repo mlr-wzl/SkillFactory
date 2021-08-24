@@ -50,7 +50,9 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'sign',
     'protect',
-    'django_apscheduler'
+    'django_apscheduler',
+    'ckeditor',
+    'ckeditor_uploader',
 ]
 
 MIDDLEWARE = [
@@ -147,6 +149,13 @@ STATICFILES_DIRS = [
 
 STATIC_URL = '/static/'
 
+STATIC_ROOT = 'NewsPaper/static'
+CKEDITOR_UPLOAD_PATH = 'modul-d16/NewsPaper/uploads/'
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+#MEDIA_URL = 'NewsPaper/media/'
+#CKEDITOR_IMAGE_BACKEND = pillow
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -174,7 +183,7 @@ EMAIL_HOST ='smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'aleresunova060595@gmail.com'
-EMAIL_HOST_PASSWORD ='alexandra2013R'
+EMAIL_HOST_PASSWORD ='?alexandra2020R?123'
 EMAIL_USE_SSL = False
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
@@ -189,8 +198,17 @@ APSCHEDULER_DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S.%f"
 APSCHEDULER_RUN_NOW_TIMEOUT = 25  # Seconds
 
 #CELERY_BROKER_URL = 'redis://localhost:6379'
-CELERY_BROKER_URL = 'redis://localhost:6379'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379'
-CELERY_ACCEPT_CONTENT = ['application/json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
+#CELERY_BROKER_URL = 'redis://localhost:6379'
+#CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+#CELERY_ACCEPT_CONTENT = ['application/json']
+#CELERY_TASK_SERIALIZER = 'json'
+#CELERY_RESULT_SERIALIZER = 'json'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': os.path.join(BASE_DIR, 'cache_files'), # Указываем, куда будем сохранять кэшируемые файлы! Не забываем создать папку cache_files внутри папки с manage.py!
+    }
+}
+
+

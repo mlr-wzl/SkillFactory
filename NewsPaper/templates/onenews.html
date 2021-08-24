@@ -1,7 +1,7 @@
 <!--  наследуемся от шаблона default.html, который мы создавали ещё во времена flatpages -->
 {% extends 'flatpages/layout.html' %}
 {% load custom_filters %}
-
+{% load static %}
 <!-- Название у нас будет proudcts -->
 {% block title %}
 News
@@ -30,7 +30,8 @@ News
                     {{ onenews.time|date:'d-M-Y H:m' }}
                 </td>
                 <td>
-                    {{ onenews.text|censor }}
+                    {{ onenews.text }}
+                    <!--{{ onenews.text|censor }} -->
                 </td>
             </tr>
         </table>

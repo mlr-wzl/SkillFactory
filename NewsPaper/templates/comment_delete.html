@@ -1,0 +1,27 @@
+{% extends 'flatpages/layout.html' %}
+{% load custom_filters %}
+
+{% block title %} News list {% endblock title %}
+
+{% block content %}
+<h2>Вы действительно хотите удалить этт коммент?</h2>
+    <hr>
+        <table>
+            <tr>
+                <td>
+                    Cодержание
+                </td>
+                  <td>
+                    {{ comment.text }}
+                </td>
+            </tr>
+            <tr>
+
+
+            </tr>
+        </table>
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="submit" value="подтвердить"></form>
+{% endblock content %}

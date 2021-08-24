@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+#from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 class Author(models.Model):  # наследуемся от класса Model
@@ -8,7 +10,7 @@ class Author(models.Model):  # наследуемся от класса Model
     #author = models.OneToOneField('auth.User', on_delete=models.CASCADE)
 
     def update_rating(self):
-        author_posts = Post.objects.filter(author = self.id, type = 'Article')
+        author_posts = Post.objects.filter(author = self.id, type = 'Announcement')
         total_post_ranking = 0
         for post in author_posts:
             total_post_ranking += post.ranking * 3
@@ -19,7 +21,7 @@ class Author(models.Model):  # наследуемся от класса Model
             total_authcomment_ranking += comment.ranking
 
         total_postcomment_ranking = 0
-        authposts_comments = Comment.objects.filter(post__author=self.id, post__type = 'Article')
+        authposts_comments = Comment.objects.filter(post__author=self.id, post__type = 'Announcement')
         for comment in authposts_comments:
             total_postcomment_ranking += comment.ranking
 
@@ -36,19 +38,19 @@ class Category(models.Model):
 
 class Post(models.Model):
     DATE_INPUT_FORMATS = ["%Y-%m-%d %H:%M:%S.%f"]
-    news='News'
-    article='Article'
+    #news='News'
+    announcement='Announcement'
     Posts = [
-        (news, 'News'),
-        (article, 'Article')
+        (announcement, 'Announcement')
     ]
     #author = models.ForeignKey(Author, on_delete=models.CASCADE)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
-    type = models.CharField(max_length=10, choices=Posts, default=news)
+    type = models.CharField(max_length=15, choices=Posts, default=announcement)
     time = models.DateTimeField(auto_now_add = True)
     category = models.ManyToManyField(Category, through = 'PostCategory')
     title = models.CharField(max_length=100, default='No title')
-    text = models.TextField()
+    #text = models.TextField()
+    text = RichTextUploadingField()
     ranking = models.IntegerField(default = 0)
 
     def like(self):
@@ -86,6 +88,7 @@ class Comment(models.Model):
     text = models.TextField()
     time = models.DateTimeField(auto_now_add=True)
     ranking = models.IntegerField(default=0)
+    accepted=models.BooleanField(default = False)
 
     def like(self):
         self.ranking += 1

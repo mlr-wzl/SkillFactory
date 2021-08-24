@@ -1,5 +1,6 @@
 {% extends 'flatpages/layout.html' %}
 {% load custom_filters %}
+{% load static %}
 
 <!-- Название у нас будет proudcts -->
 {% block title %}
@@ -29,24 +30,30 @@ News
                     {{ onenews.time|date:'d-M-Y H:m' }}
                 </td>
                 <td>
-                    {{ onenews.text|censor }}
+                   <!-- {{ onenews.text|censor }} -->
+                    {{ onenews.text }}
                 </td>
-                <td>
+            <tr/>
+<!--                <td>
                     {{ onenews.category }}
                 </td>
                 <td>
                 {% for category in onenews.category.all %}
                         {{ category.name }}<br>
                 {% endfor %}
-                </td>
-                    <td>
+                </td>-->
+                <!--<td>-->
+
+                        <a href="{% url 'comment_create' %}">Комментировать</a>
+
+<!--                     <td>
                     {% for category in onenews.category.all %}
                     <form action="{% url 'subscribe' category.pk %}" method="POST">
                     {% csrf_token%}
                     <button type="submit" value="{{ category }}">Подписаться на категорию</button>
                     </form>
                     {% endfor %}
-                    </td>
+                    </td> -->
             </tr>
         </table>
 {% endblock content %}
