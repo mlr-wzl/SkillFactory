@@ -22,41 +22,28 @@ logger = logging.getLogger(__name__)
 
 def my_job():
     end_date = datetime.datetime.now().date()
-
-    #end_date = datetime.datetime
-    #print(end_date)
     start_date = end_date - datetime.timedelta(days=7)
-    #print(start_date)
-    #print('выполнение началось')
     users = User.objects.all()
-    #print(users)
-    categories = Category.objects.all()
-    #print(categories)
-    #subscribers = category_3.subscribers.all()
-    for one_category in categories:
-        subscribers = one_category.subscribers.all()
-        #print(category)
-        if subscribers.exists():
-            for subscriber in subscribers:
-                list_of_posts = Post.objects.filter(time__range=(start_date, end_date), category=one_category)
-                print(list_of_posts)
-                html_content = render_to_string(
-                'subs_email_each_month.html',
-                {
-                    'news': list_of_posts,
-                    'usr': subscriber,
-                }
-                )
-                print(subscriber.username)
-                msg = EmailMultiAlternatives(
-                subject='New posts of the week',
-                body=f'Здравствуй {subscriber.username}. Новые статьи в твоём любимом разделе!',  # это то же, что и message
-                from_email='aleresunova060595@gmail.com',
-                to=[f'{subscriber.email}'],  # это то же, что и recipients_list
-                #to=['aleresunova@mail.ru']
-                )
-                msg.attach_alternative(html_content, "text/html")  # добавляем html
-                msg.send()  # отсылаем
+
+    for user in users:
+        list_of_posts = Post.objects.filter(time__range=(start_date, end_date))
+        #print(list_of_posts)
+        html_content = render_to_string(
+        'subs_email_each_month.html',
+        {
+            'news': list_of_posts,
+            'usr': user,
+        }
+        )
+        msg = EmailMultiAlternatives(
+        subject='New posts of the week',
+        body=f'Здравствуй {user.username}. Новые статьи в твоём любимом разделе!',  # это то же, что и message
+        from_email='aleresunova060595@gmail.com',
+        to=[f'{user.email}'],  # это то же, что и recipients_list
+        #to=['aleresunova@mail.ru']
+        )
+        msg.attach_alternative(html_content, "text/html")  # добавляем html
+        msg.send()  # отсылаем
 
 
 # функция, которая будет удалять неактуальные задачи

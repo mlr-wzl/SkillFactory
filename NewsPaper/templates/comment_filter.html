@@ -2,15 +2,19 @@
 {% load custom_filters %}
 {% block content %}
 <h2>Страница авторизованного пользователя {{request.user.username}}</h2>
+
 {% if is_not_authors %}
 <button> <a href="sign/upgrade/"> Стать автором!</a> </button>
 {% endif %}
     <hr>
-    {% if mycomments %}
+    {% if comment_filter %}
         <table>
             <tr>
                 <td>
-                    Краткое содержание
+                    Пост
+                </td>
+                <td>
+                    Краткое содержание коммента
                 </td>
                 <td>
                     Действия
@@ -19,14 +23,16 @@
                     Комментарий принят?
                 </td>
             </tr>
-         {% for onecomment in mycomments %}
+         {% for onecomment in comment_filter %}
             <tr>
+                <td>
+                        {{ onecomment.post.title }}
+                </td>
                 <td>
                         {{ onecomment.text }}
                 </td>
                  <td>
                      <a href="{% url 'comment_delete' onecomment.id %}"><u> Удалить </u></a>
-                    <a href="{% url 'comment_filter' onecomment.id %}"><u> Фильтровать по посту </u></a>
                 </td>
                 <td>
                     {% if onecomment.accepted == True %}

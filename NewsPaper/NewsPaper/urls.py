@@ -16,5 +16,5 @@ urlpatterns = [
     path('', include('protect.urls')),
     re_path(r'^ckeditor/', include('ckeditor_uploader.urls')),
     url(r'^ckeditor/upload/', login_required(views.upload), name='ckeditor_upload'), url(r'^ckeditor/browse/', never_cache(login_required(views.browse)), name='ckeditor_browse')
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

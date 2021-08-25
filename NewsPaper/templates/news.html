@@ -33,16 +33,16 @@ News
             <tr>
                 <td>
                     <a href="{% url 'news_detail' onenews.id %}">{{ onenews.title|censor}}</a>
-                    <!-- При нажатии на имя товара в таблице нас теперь будет перекидывать на страницу с информацией о товаре -->
-                    <a href="{% url 'news_update' onenews.id %}"><u>Редактировать</u></a> <!-- добавим ссылку на редактирование товара-->
 
-                    <a href="{% url 'news_delete' onenews.id %}"><u> Удалить </u></a> <!-- добавим ссылку на удаление товара-->
+                    <a href="{% url 'news_update' onenews.id %}"><u>Редактировать</u></a>
+
+                    <a href="{% url 'news_delete' onenews.id %}"><u> Удалить </u></a>
                 </td>
                 <td>
                     {{ onenews.time|date:'d-M-Y H:m' }}
                 </td>
                 <td>
-                    {{ onenews.text|truncatechars:20|censor}}
+                    {{ onenews.text|truncatechars:20|censor|safe}}
                 </td>
             </tr>
         {% endfor %}
@@ -53,7 +53,6 @@ News
 
 {% if is_paginated %}
 
-    <!-- Если доступна предыдущая страница, то даём ссылку на неё и самую первую страницу -->
     {% if page_obj.has_previous %}
         <a href="?page=1">First</a>
         <a href="?page={{ page_obj.previous_page_number }}"><<<</a>
@@ -75,11 +74,6 @@ News
 {% endif %}
 {% endif %}
 
-<!--<form method="POST">-->
-<!--    {% csrf_token %}-->
-<!--    {{ form }} &lt;!&ndash; Теперь нам нужна только готовая форма и кнопка &ndash;&gt;-->
-<!--    <input type="submit" value="Добавить новость">-->
-<!--</form>-->
 <a href="{% url 'news_create' %}">Добавить новость</a> <br>
 
 {% endblock content %}

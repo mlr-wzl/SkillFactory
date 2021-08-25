@@ -6,7 +6,6 @@
 <h3>Информация о новости</h3>
 <form method="POST">
     {% csrf_token %}
-    <!--{{ form }} --> <!-- Теперь нам нужна только готовая форма и кнопка -->
     {{ form.media }}
     {{ form.as_p }}
     <input type="submit" value="Добавить новость">

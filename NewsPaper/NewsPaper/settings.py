@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+from .passwort import passwort
 from pathlib import Path
 import os
 
@@ -149,12 +149,7 @@ STATICFILES_DIRS = [
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = 'NewsPaper/static'
 CKEDITOR_UPLOAD_PATH = 'modul-d16/NewsPaper/uploads/'
-X_FRAME_OPTIONS = 'SAMEORIGIN'
-#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-#MEDIA_URL = 'NewsPaper/media/'
-#CKEDITOR_IMAGE_BACKEND = pillow
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -183,7 +178,7 @@ EMAIL_HOST ='smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'aleresunova060595@gmail.com'
-EMAIL_HOST_PASSWORD ='?alexandra2020R?123'
+EMAIL_HOST_PASSWORD = passwort
 EMAIL_USE_SSL = False
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
@@ -191,7 +186,6 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 MANAGERS=[('Aleks', 'aleresunova060595@gmail.com')]
 
 # формат даты, которую будет воспринимать наш задачник (вспоминаем модуль по фильтрам)
-#APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
 APSCHEDULER_DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S.%f"
 
 # если задача не выполняется за 25 секунд, то она автоматически снимается, можете поставить время побольше, но как правило, это сильно бьёт по производительности сервера
