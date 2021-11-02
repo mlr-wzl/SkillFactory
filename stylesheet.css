@@ -1,0 +1,90 @@
+@media only screen and ( max-width: 479px ) {
+    .item-even {
+      width: 18%;
+      font-size: 12px;
+      text-align: left !important;
+    }
+    .item-odd, .item-1 {
+        width: 80%;
+        font-size: 12px;
+        text-align: center;
+      }
+   .title-1{
+       font-size: 12px !important;
+   }
+   .name{
+    font-size: 14px !important;
+   }
+    .name-job{
+        font-size: 12px !important;
+    }
+    .place-job{
+        font-size: 12px !important;
+    }
+}
+
+
+.item-1 {
+    background-color: #929191;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    font-family: arial, "lucida console", sans-serif;
+
+}
+
+.item-even {
+    background-color: white;
+    text-align: center; 
+}
+
+.item-odd {
+    background-color: #929191;
+    font-family:arial, "lucida console", sans-serif;
+    color: white;
+}
+
+.grid-wrapper {
+    display: grid;
+    /* grid-template-columns: 1fr 2fr; */
+    grid-template-columns:
+    minmax(300px, 1fr)
+    minmax(600px, 2fr)
+    ;
+    grid-template-rows: auto;
+    width: 100vw;
+    height: 100vh;
+}
+
+
+.name {
+    font-family:arial, "lucida console", sans-serif;
+    font-weight:bold;
+    text-transform: uppercase;
+    color: rgba(255, 127, 80, 0.8);
+    font-size: 50px;
+}
+
+.title-1 {
+    text-align: center;
+    font-family:arial, "lucida console", sans-serif;
+    font-weight:bold;
+    text-transform: uppercase;
+    color: rgba(255, 127, 80, 0.8);
+    font-size: 20px;
+}
+
+
+.name-job {
+    font-family:arial, "lucida console", sans-serif;
+    font-weight:bold;
+    color: grey;
+    font-size: 20px;
+}
+
+.place-job {
+    font-family:arial, "lucida console", sans-serif;
+    color: grey;
+    font-style: italic;
+    font-size: 15px;
+}
