@@ -1,7 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a58ce574-77a7-415e-ba8c-2dd4c0651ca6" name="Default Changelist" comment="" />
+    <list default="true" id="a58ce574-77a7-415e-ba8c-2dd4c0651ca6" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/core/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/core/templates/core/base.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/core/templates/core/frontpage.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/core/templates/core/login.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/core/templates/core/room.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/core/templates/core/rooms.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/core/templates/core/signup.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/room/consumers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/room/routing.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/room/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/project/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/project/asgi.py" beforeDir="false" afterPath="$PROJECT_DIR$/project/project/asgi.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/project/project/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/project/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/project/project/urls.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -11,16 +28,25 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="HTML File" />
         <option value="Python Script" />
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="2EqPAlMAwBcQ8yMYlVzrX2kop73" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/project/project" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\users\mlr\Backup\Test3\Diplom_v3\project" />
+      <recent name="D:\users\mlr\Backup\Test3\Diplom_v3\project\room" />
       <recent name="D:\users\mlr\Backup\Test3\Diplom_v3\project\videos" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
@@ -51,6 +77,17 @@
       <updated>1663319999306</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
