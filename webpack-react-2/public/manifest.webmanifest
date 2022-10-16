@@ -1,0 +1,18 @@
+{
+	"theme_color": "#000000",
+	"background_color": "#ffffff",
+	"display": "standalone",
+	"scope": "/",
+	"start_url": "/",
+	"name": "Hello Halo lab",
+	"short_name": "Hello Halo",
+	"description": "My demo PWA application",
+	"icons": [
+		{
+			"src": "/images/icon.png",
+			"sizes": "196x196",
+			"type": "image/png",
+			"purpose": "any maskable"
+		},
+	]
+}

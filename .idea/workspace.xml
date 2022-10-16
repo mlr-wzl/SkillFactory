@@ -2,22 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a58ce574-77a7-415e-ba8c-2dd4c0651ca6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/core/forms.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/core/templates/core/base.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/core/templates/core/frontpage.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/core/templates/core/login.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/core/templates/core/room.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/core/templates/core/rooms.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/core/templates/core/signup.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/room/consumers.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/room/routing.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/room/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/videos/frontend/src/VideoService.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/videos/frontend/src/Videos.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/videos/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/videos/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/project/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/project/asgi.py" beforeDir="false" afterPath="$PROJECT_DIR$/project/project/asgi.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/project/project/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/project/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/project/project/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/videos/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/project/videos/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webpack-react-2/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/webpack-react-2/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webpack-react-2/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/webpack-react-2/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webpack-react-2/public/manifest.webmanifest" beforeDir="false" afterPath="$PROJECT_DIR$/webpack-react-2/public/manifest.webmanifest" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webpack-react-2/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/webpack-react-2/src/index.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -44,13 +39,14 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/project/project" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\users\mlr\Backup\Test3\Diplom_v3\project\project" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\users\mlr\Backup\Test3\Diplom_v3\webpack-react-2" />
       <recent name="D:\users\mlr\Backup\Test3\Diplom_v3\project" />
       <recent name="D:\users\mlr\Backup\Test3\Diplom_v3\project\room" />
       <recent name="D:\users\mlr\Backup\Test3\Diplom_v3\project\videos" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\users\mlr\Backup\Test3\Diplom_v3\project\project" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -83,7 +79,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>

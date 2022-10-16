@@ -18,6 +18,7 @@
     "babel-loader": "^8.1.0",
     "css-loader": "^4.2.1",
     "html-webpack-plugin": "^4.3.0",
+    "next-pwa": "^5.6.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "style-loader": "^1.2.1",

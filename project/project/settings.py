@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     #'news.apps.NewsConfig',
     'django.contrib.sites',
     'django.contrib.flatpages',
+    'rest_framework',
+    'corsheaders',
     # 'fpages',
     # 'django_filters',
     # 'allauth',
@@ -57,8 +59,7 @@ INSTALLED_APPS = [
     # 'ckeditor',
     # 'ckeditor_uploader',
     # 'rest_framework',
-    'corsheaders',
-    # 'embed_video',
+    'embed_video',
 ]
 
 MIDDLEWARE = [
