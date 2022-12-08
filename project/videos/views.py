@@ -15,7 +15,6 @@ def videos(request):
         return(Response({'data': serializer.data}))
     elif request.method == 'POST':
         video = Video()
-        #video.text = request.data['text']
         video.save()
         return Response(status=status.HTTP_200_OK)
 
